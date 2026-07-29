@@ -1,0 +1,14 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor folders
+.vscode/
+.idea/
+
+# Node modules (in case npm is used in the future)
+node_modules/
+
+# Sensitive environment/config files
+.env
+*.local
