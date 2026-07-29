@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root{
+  /* Official CSDL / PHINMA Colors */
+
+  --blue-deep: #1F2F6F;      /* Navy Blue (logo text) */
+  --blue-mid: #304A93;       /* Lighter Navy */
+  --green-mid: #2E5E20;      /* Logo Green */
+  --green-deep: #214517;     /* Dark Green */
+  --navy-text: #1F2F6F;
+  --forest: #2E5E20;
+  --forest-dark: #214517;
+  --gold: #FFC700;           /* Logo Gold */
+  --gold-soft: #FFD84D;
+  --slate: #64748B;
+  --slate-light: #94A3B8;
+  --hairline: #E8ECF2;
+  --success-bg: #EEF9F0;
+  --success-text: #2E5E20;
+  --error-bg: #FFF1F1;
+  --error-text: #C0392B;
+}
+    html, body { height: 100%; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(circle at 15% 8%, rgba(240, 180, 41, 0.10), transparent 42%),
+        radial-gradient(circle at 88% 92%, rgba(28, 110, 74, 0.30), transparent 48%),
+        linear-gradient(155deg, var(--blue-deep) 0%, var(--blue-mid) 42%, var(--green-mid) 75%, var(--green-deep) 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 40px 16px;
+      color: var(--navy-text);
+    }
+
+    .page {
+      width: 100%;
+      max-width: 460px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: riseIn 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    @keyframes riseIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ---------- Masthead ---------- */
+    .masthead { text-align: center; margin-bottom: 22px; }
+
+    .logo-ring {
+      width: 92px; height: 92px;
+      margin: 0 auto 14px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      padding: 10px;
+      display: flex; align-items: center; justify-content: center;
+      filter: drop-shadow(0 8px 18px rgba(0,0,0,0.35));
+      box-shadow: 0 0 0 3px rgba(255,255,255,0.15);
+    }
+    .logo-ring img { width: 100%; height: 100%; object-fit: contain; border-radius: 50%; }
+
+    .uni-name {
+      font-family: 'Fraunces', serif;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      color: #F4F7FB;
+    }
+
+    .office-name {
+      font-size: 11.5px;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--gold-soft);
+      margin-top: 6px;
+    }
+
+    .divider-arc {
+      width: 120px;
+      height: 10px;
+      margin: 14px auto 0;
+      border-top: 1.5px solid rgba(240, 180, 41, 0.55);
+      border-radius: 50%;
+    }
+
+    /* ---------- Clock strip ---------- */
+    .clock-strip {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 22px;
+      color: rgba(244, 247, 251, 0.85);
+    }
+    .clock-time {
+      font-family: 'Fraunces', serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: #FFFFFF;
+      letter-spacing: 0.4px;
+      font-variant-numeric: tabular-nums;
+    }
+    .clock-sep { width: 3px; height: 3px; border-radius: 50%; background: var(--gold); opacity: 0.8; }
+    .clock-date { font-size: 12.5px; font-weight: 500; color: rgba(244, 247, 251, 0.65); }
+
+    /* ---------- Card ---------- */
+    .card {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.98);
+      border-radius: 24px;
+      padding: 36px 30px 30px;
+      box-shadow:
+        0 30px 60px -18px rgba(4, 12, 28, 0.55),
+        0 1px 0 rgba(255,255,255,0.5) inset;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--blue-mid) 0%, var(--gold) 52%, var(--green-mid) 100%);
+    }
+
+    .card-title {
+      font-family: 'Fraunces', serif;
+      font-size: 19px;
+      font-weight: 600;
+      color: var(--navy-text);
+      text-align: center;
+      margin-bottom: 4px;
+    }
+
+    .card-subtitle {
+      font-size: 12.5px;
+      color: var(--slate);
+      text-align: center;
+      margin-bottom: 26px;
+      font-weight: 500;
+    }
+
+    .field { margin-bottom: 16px; }
+
+    .field-label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--slate);
+      margin-bottom: 7px;
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+    }
+
+    .select-wrap { position: relative; }
+
+    select {
+      width: 100%;
+      padding: 13px 40px 13px 15px;
+      font-size: 14.5px;
+      font-family: inherit;
+      font-weight: 500;
+      color: var(--navy-text);
+      border: 1.5px solid var(--hairline);
+      border-radius: 12px;
+      background: #F8FAFC;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .select-wrap::after {
+      content: '';
+      position: absolute;
+      right: 16px; top: 50%;
+      width: 10px; height: 10px;
+      transform: translateY(-65%) rotate(45deg);
+      border-right: 1.5px solid var(--slate);
+      border-bottom: 1.5px solid var(--slate);
+      pointer-events: none;
+    }
+
+    select:focus {
+      outline: none;
+      border-color: var(--green-mid);
+      background: #ffffff;
+      box-shadow: 0 0 0 3px rgba(28, 110, 74, 0.12);
+    }
+    select:disabled { opacity: 0.55; cursor: not-allowed; }
+
+    /* ---------- Status panel ---------- */
+    .status-badge {
+      display: none;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      margin: 20px 0 22px;
+      border: 1.5px solid transparent;
+    }
+    .status-badge.show { display: flex; animation: fadeScale 0.35s ease; }
+    @keyframes fadeScale { from { opacity: 0; transform: scale(0.97); } to { opacity: 1; transform: scale(1); } }
+
+    .status-icon {
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      font-size: 15px;
+    }
+    .status-copy { display: flex; flex-direction: column; }
+    .status-label { font-size: 10.5px; font-weight: 800; letter-spacing: 0.8px; text-transform: uppercase; }
+    .status-sub { font-size: 13px; font-weight: 600; margin-top: 1px; }
+
+    .status-badge.in {
+      background: linear-gradient(135deg, #F0FBF2, #E6F8EA);
+      border-color: rgba(30, 122, 52, 0.18);
+    }
+    .status-badge.in .status-icon { background: var(--success-text); color: #fff; }
+    .status-badge.in .status-label { color: var(--success-text); }
+    .status-badge.in .status-sub { color: #14532D; }
+
+    .status-badge.out {
+      background: #F4F6F9;
+      border-color: var(--hairline);
+    }
+    .status-badge.out .status-icon { background: var(--slate-light); color: #fff; }
+    .status-badge.out .status-label { color: var(--slate); }
+    .status-badge.out .status-sub { color: #334155; }
+
+    .status-badge.done {
+      background: linear-gradient(135deg, #FFF9E8, #FFF3D1);
+      border-color: rgba(255, 199, 0, 0.35);
+    }
+    .status-badge.done .status-icon { background: var(--gold); color: #3A2E00; }
+    .status-badge.done .status-label { color: #8A6D00; }
+    .status-badge.done .status-sub { color: #6B5400; }
+
+    .status-badge.loading {
+      background: #F4F6F9;
+      border-color: var(--hairline);
+    }
+    .status-badge.loading .status-icon { background: var(--slate-light); color: #fff; }
+    .status-badge.loading .status-label,
+    .status-badge.loading .status-sub { color: var(--slate); }
+
+    .pulse-dot {
+      width: 7px; height: 7px; border-radius: 50%; background: #fff;
+      animation: pulseDot 1.4s infinite ease-in-out;
+    }
+    @keyframes pulseDot { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
+
+    /* ---------- Buttons ---------- */
+    .btn-row { display: flex; gap: 12px; margin-bottom: 4px; }
+
+    button {
+      flex: 1;
+      padding: 15px 10px;
+      border: none;
+      border-radius: 13px;
+      font-size: 14.5px;
+      font-weight: 700;
+      font-family: inherit;
+      letter-spacing: 0.3px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.15s ease, box-shadow 0.2s ease, opacity 0.15s ease;
+    }
+    button:active:not(:disabled) { transform: scale(0.965); }
+    button:disabled { opacity: 0.4; cursor: not-allowed; box-shadow: none !important; transform: none; }
+
+    #btnIn {
+      background: linear-gradient(135deg, var(--green-mid), var(--green-deep));
+      color: #fff;
+      box-shadow: 0 10px 22px -8px rgba(28, 110, 74, 0.55);
+    }
+    #btnIn:hover:not(:disabled) { box-shadow: 0 12px 26px -8px rgba(28, 110, 74, 0.65); }
+
+    #btnOut {
+      background: linear-gradient(135deg, #C23B2E, #9C2E23);
+      color: #fff;
+      box-shadow: 0 10px 22px -8px rgba(194, 59, 46, 0.5);
+    }
+    #btnOut:hover:not(:disabled) { box-shadow: 0 12px 26px -8px rgba(194, 59, 46, 0.6); }
+
+    #btnHistory {
+      margin-top: 12px;
+      background: #F8FAFC;
+      color: var(--navy-text);
+      border: 1.5px solid var(--hairline);
+      box-shadow: none;
+      flex: none;
+      width: 100%;
+    }
+    #btnHistory:hover:not(:disabled) { background: #F1F5F9; }
+
+    /* ---------- Message ---------- */
+    #message {
+      font-size: 13px;
+      font-weight: 600;
+      text-align: center;
+      margin-top: 18px;
+      min-height: 20px;
+      padding: 0;
+      border-radius: 12px;
+      transition: all 0.25s ease;
+    }
+    #message:empty { padding: 0; }
+    #message.success { background: var(--success-bg); color: var(--success-text); padding: 11px 14px; }
+    #message.error { background: var(--error-bg); color: var(--error-text); padding: 11px 14px; }
+
+    /* ---------- Footer ---------- */
+    .footer-note {
+      margin-top: 26px;
+      text-align: center;
+      color: rgba(244, 247, 251, 0.55);
+    }
+    .footer-note .line1 { font-size: 12px; font-weight: 600; color: rgba(244, 247, 251, 0.8); }
+    .footer-note .line2 { font-size: 11px; margin-top: 4px; line-height: 1.5; }
+    .footer-note .line3 { font-size: 10.5px; margin-top: 10px; letter-spacing: 0.4px; color: rgba(244, 247, 251, 0.4); }
+
+    /* ---------- History Modal ---------- */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(15, 23, 42, 0.55);
+      backdrop-filter: blur(2px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.show { display: flex; animation: fadeScale 0.25s ease; }
+
+    .modal-box {
+      width: 100%;
+      max-width: 460px;
+      max-height: 82vh;
+      background: #fff;
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 30px 60px -18px rgba(4, 12, 28, 0.6);
+    }
+
+    .modal-header {
+      padding: 20px 22px 16px;
+      border-bottom: 1.5px solid var(--hairline);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .modal-title { font-family: 'Fraunces', serif; font-size: 17px; font-weight: 600; color: var(--navy-text); }
+    .modal-sub { font-size: 11.5px; color: var(--slate); margin-top: 3px; }
+    .modal-close {
+      flex: none;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: #F1F5F9;
+      color: var(--slate);
+      font-size: 16px;
+      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: none;
+      padding: 0;
+    }
+    .modal-close:hover { background: #E2E8F0; }
+
+    .modal-body {
+      padding: 16px 22px 22px;
+      overflow-y: auto;
+    }
+
+    .history-item {
+      border: 1.5px solid var(--hairline);
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+    }
+    .history-item:last-child { margin-bottom: 0; }
+
+    .history-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .history-date { font-size: 13px; font-weight: 700; color: var(--navy-text); }
+
+    .history-status {
+      font-size: 9.5px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 20px;
+    }
+    .history-status.approved { background: var(--success-bg); color: var(--success-text); }
+    .history-status.pending { background: #FFF9E8; color: #8A6D00; }
+    .history-status.rejected { background: var(--error-bg); color: var(--error-text); }
+
+    .history-sessions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .history-session-label { font-size: 10px; font-weight: 700; color: var(--slate); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3px; }
+    .history-session-val { font-size: 12px; color: #334155; font-weight: 500; }
+
+    .history-total {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--navy-text);
+      border-top: 1px dashed var(--hairline);
+      padding-top: 8px;
+      margin-top: 4px;
+    }
+
+    .history-empty { text-align: center; padding: 30px 10px; color: var(--slate); font-size: 13px; }
+
+    @media (max-width: 400px) {
+      .card { padding: 30px 20px 26px; }
+      .clock-time { font-size: 18px; }
+      .history-sessions { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <div class="masthead">
+      <div class="logo-ring">
+        <img src="https://drive.google.com/thumbnail?id=1S8_0e_O0t88hyLpgjj64oKmkUnFsnjPQ&sz=w1000" alt="CSDL Logo">
+      </div>
+      <div class="uni-name">PHINMA University of Iloilo</div>
+      <div class="office-name">CENTER FOR STUDENT DEVELOPMENT AND LEADERSHIP</div>
+      <div class="office-name">Student Formation Unit</div>
+      <div class="divider-arc"></div>
+    </div>
+
+    <div class="clock-strip">
+      <span class="clock-time" id="clockTime">--:--:-- --</span>
+      <span class="clock-sep"></span>
+      <span class="clock-date" id="clockDate">Loading date...</span>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Student Assistant Time Tracker</div>
+      <div class="card-subtitle">Student Formation Unit &nbsp;&middot;&nbsp; Select course, year level, then your name</div>
+
+      <div class="field">
+        <label class="field-label" for="courseInput">Course</label>
+        <div class="select-wrap">
+          <select id="courseInput" onchange="handleCourseChange()" disabled>
+            <option value="">Loading courses...</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="yearInput">Year Level</label>
+        <div class="select-wrap">
+          <select id="yearInput" onchange="handleYearChange()" disabled>
+            <option value="">-- Select course first --</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="nameInput">Student Assistant</label>
+        <div class="select-wrap">
+          <select id="nameInput" onchange="handleNameChange()" disabled>
+            <option value="">-- Select year level first --</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="statusBadge" class="status-badge">
+        <div class="status-icon"><span id="statusIcon" class="pulse-dot"></span></div>
+        <div class="status-copy">
+          <span class="status-label" id="statusLabel"></span>
+          <span class="status-sub" id="statusText"></span>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button id="btnIn" onclick="handleTimeIn()" disabled>Time In</button>
+        <button id="btnOut" onclick="handleTimeOut()" disabled>Time Out</button>
+      </div>
+
+      <button id="btnHistory" onclick="openHistory()" disabled>View My History</button>
+
+      <div id="message"></div>
+    </div>
+
+    <div class="footer-note">
+      <div class="line1">Student Assistant Attendance System</div>
+      <div class="line2">Student Formation Unit<br>PHINMA University of Iloilo</div>
+      <div class="line3">&copy; 2026 PHINMA University of Iloilo</div>
+    </div>
+
+  </div>
+
+  <!-- History Modal -->
+  <div class="modal-overlay" id="historyOverlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div>
+          <div class="modal-title">Attendance History</div>
+          <div class="modal-sub" id="historySub">&nbsp;</div>
+        </div>
+        <button class="modal-close" onclick="closeHistory()">&times;</button>
+      </div>
+      <div class="modal-body" id="historyBody">
+        <div class="history-empty">Loading...</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentStatus = null;
+    let currentSession = null;
+
+    // ---- Live clock (UI only, does not touch app logic) ----
+    function updateClock() {
+      const now = new Date();
+      let h = now.getHours();
+      const m = String(now.getMinutes()).padStart(2, '0');
+      const s = String(now.getSeconds()).padStart(2, '0');
+      const ampm = h >= 12 ? 'PM' : 'AM';
+      h = h % 12; h = h === 0 ? 12 : h;
+      document.getElementById('clockTime').textContent = h + ':' + m + ':' + s + ' ' + ampm;
+
+      const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+      const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+      document.getElementById('clockDate').textContent = days[now.getDay()] + ', ' + months[now.getMonth()] + ' ' + now.getDate() + ', ' + now.getFullYear();
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    window.addEventListener('DOMContentLoaded', function() {
+      google.script.run
+        .withSuccessHandler(function(courses) {
+          const select = document.getElementById('courseInput');
+          select.innerHTML = '<option value="">-- Select Course --</option>';
+          courses.forEach(function(c) {
+            const opt = document.createElement('option');
+            opt.value = c;
+            opt.textContent = c;
+            select.appendChild(opt);
+          });
+          select.disabled = false;
+        })
+        .withFailureHandler(function(err) {
+          showMessage('Failed to load courses: ' + err.message, 'error');
+        })
+        .getCourseList();
+    });
+
+    function showMessage(text, type) {
+      const el = document.getElementById('message');
+      el.textContent = text;
+      el.className = type || '';
+    }
+
+    function setControlsDisabled(disabled) {
+      document.getElementById('btnIn').disabled = disabled;
+      document.getElementById('btnOut').disabled = disabled;
+      document.getElementById('courseInput').disabled = disabled;
+      document.getElementById('yearInput').disabled = disabled;
+      document.getElementById('nameInput').disabled = disabled;
+    }
+
+    function resetStatusAndButtons() {
+      document.getElementById('statusBadge').classList.remove('show');
+      document.getElementById('btnIn').disabled = true;
+      document.getElementById('btnOut').disabled = true;
+      document.getElementById('btnHistory').disabled = true;
+      currentStatus = null;
+      currentSession = null;
+    }
+
+    function handleCourseChange() {
+      const course = document.getElementById('courseInput').value;
+      const yearSelect = document.getElementById('yearInput');
+      const nameSelect = document.getElementById('nameInput');
+      showMessage('', '');
+      resetStatusAndButtons();
+
+      nameSelect.innerHTML = '<option value="">-- Select year level first --</option>';
+      nameSelect.disabled = true;
+
+      if (!course) {
+        yearSelect.innerHTML = '<option value="">-- Select course first --</option>';
+        yearSelect.disabled = true;
+        return;
+      }
+
+      yearSelect.disabled = true;
+      yearSelect.innerHTML = '<option value="">Loading...</option>';
+
+      google.script.run
+        .withSuccessHandler(function(years) {
+          yearSelect.innerHTML = '<option value="">-- Select Year Level --</option>';
+          years.forEach(function(y) {
+            const opt = document.createElement('option');
+            opt.value = y;
+            opt.textContent = y;
+            yearSelect.appendChild(opt);
+          });
+          yearSelect.disabled = false;
+        })
+        .withFailureHandler(function(err) {
+          showMessage('Failed to load year levels: ' + err.message, 'error');
+        })
+        .getYearLevels();
+    }
+
+    function handleYearChange() {
+      const course = document.getElementById('courseInput').value;
+      const year = document.getElementById('yearInput').value;
+      const nameSelect = document.getElementById('nameInput');
+      showMessage('', '');
+      resetStatusAndButtons();
+
+      if (!year) {
+        nameSelect.innerHTML = '<option value="">-- Select year level first --</option>';
+        nameSelect.disabled = true;
+        return;
+      }
+
+      nameSelect.disabled = true;
+      nameSelect.innerHTML = '<option value="">Loading names...</option>';
+
+      google.script.run
+        .withSuccessHandler(function(names) {
+          nameSelect.innerHTML = '<option value="">-- Select Name --</option>';
+          if (names.length === 0) {
+            nameSelect.innerHTML = '<option value="">No students under this selection</option>';
+            return;
+          }
+          names.forEach(function(n) {
+            const opt = document.createElement('option');
+            opt.value = n;
+            opt.textContent = n;
+            nameSelect.appendChild(opt);
+          });
+          nameSelect.disabled = false;
+        })
+        .withFailureHandler(function(err) {
+          showMessage('Failed to load names: ' + err.message, 'error');
+        })
+        .getStudentsByCourseYear(course, year);
+    }
+
+    function setStatusLoading() {
+      const badge = document.getElementById('statusBadge');
+      const label = document.getElementById('statusLabel');
+      const text = document.getElementById('statusText');
+      badge.className = 'status-badge show loading';
+      label.textContent = 'Please wait';
+      text.textContent = 'Checking status...';
+    }
+
+    function updateStatusUI(status, session, customMsg) {
+      currentStatus = status;
+      currentSession = session || null;
+      const badge = document.getElementById('statusBadge');
+      const label = document.getElementById('statusLabel');
+      const text = document.getElementById('statusText');
+      const btnIn = document.getElementById('btnIn');
+      const btnOut = document.getElementById('btnOut');
+
+      badge.classList.add('show');
+
+      if (status === 'in') {
+        badge.className = 'status-badge show in';
+        label.textContent = 'Active Shift';
+        text.textContent = 'Currently Timed In (' + session + ')';
+        btnIn.disabled = true;
+        btnOut.disabled = false;
+      } else if (status === 'done') {
+        badge.className = 'status-badge show done';
+        label.textContent = 'Completed';
+        text.textContent = customMsg || 'Both AM and PM sessions completed today.';
+        btnIn.disabled = true;
+        btnOut.disabled = true;
+      } else {
+        badge.className = 'status-badge show out';
+        label.textContent = 'Off Duty';
+        text.textContent = customMsg || 'Currently Timed Out';
+        btnIn.disabled = false;
+        btnOut.disabled = true;
+      }
+    }
+
+    function handleNameChange() {
+      const course = document.getElementById('courseInput').value;
+      const year = document.getElementById('yearInput').value;
+      const name = document.getElementById('nameInput').value;
+      showMessage('', '');
+
+      if (!name || !year || !course) {
+        resetStatusAndButtons();
+        return;
+      }
+
+      setControlsDisabled(true);
+      setStatusLoading();
+
+      google.script.run
+        .withSuccessHandler(function(res) {
+          setControlsDisabled(false);
+          document.getElementById('btnHistory').disabled = false;
+          if (res.success) {
+            updateStatusUI(res.status, res.session, res.message);
+          } else {
+            document.getElementById('statusBadge').classList.remove('show');
+            showMessage(res.message, 'error');
+          }
+        })
+        .withFailureHandler(function(err) {
+          setControlsDisabled(false);
+          document.getElementById('statusBadge').classList.remove('show');
+          showMessage('Connection error: ' + err.message, 'error');
+        })
+        .getStatus(course, year, name);
+    }
+
+    function getSelection() {
+      const course = document.getElementById('courseInput').value;
+      const year = document.getElementById('yearInput').value;
+      const name = document.getElementById('nameInput').value;
+      if (!course || !year || !name) {
+        showMessage('Please select course, year level, and name first.', 'error');
+        return null;
+      }
+      return { course: course, year: year, name: name };
+    }
+
+    function handleTimeIn() {
+      if (currentStatus === 'in') {
+        showMessage('You are already timed in.', 'error');
+        return;
+      }
+      const sel = getSelection();
+      if (!sel) return;
+
+      setControlsDisabled(true);
+      showMessage('Processing...', '');
+
+      google.script.run
+        .withSuccessHandler(function(res) {
+          setControlsDisabled(false);
+          showMessage(res.message, res.success ? 'success' : 'error');
+          if (res.success) updateStatusUI('in', res.session);
+        })
+        .withFailureHandler(function(err) {
+          setControlsDisabled(false);
+          showMessage('Connection error: ' + err.message, 'error');
+        })
+        .timeIn(sel.course, sel.year, sel.name);
+    }
+
+    function handleTimeOut() {
+      if (currentStatus !== 'in') {
+        showMessage('You need to time in first before timing out.', 'error');
+        return;
+      }
+      const sel = getSelection();
+      if (!sel) return;
+
+      setControlsDisabled(true);
+      showMessage('Processing...', '');
+
+      google.script.run
+        .withSuccessHandler(function(res) {
+          setControlsDisabled(false);
+          showMessage(res.message, res.success ? 'success' : 'error');
+          if (res.success) {
+            // Re-check full status after time out, in case both sessions are now done
+            google.script.run
+              .withSuccessHandler(function(statusRes) {
+                if (statusRes.success) {
+                  updateStatusUI(statusRes.status, statusRes.session, statusRes.message);
+                }
+              })
+              .getStatus(sel.course, sel.year, sel.name);
+          }
+        })
+        .withFailureHandler(function(err) {
+          setControlsDisabled(false);
+          showMessage('Connection error: ' + err.message, 'error');
+        })
+        .timeOut(sel.course, sel.year, sel.name);
+    }
+
+    // ---- History Modal ----
+
+    function openHistory() {
+      const sel = getSelection();
+      if (!sel) return;
+
+      document.getElementById('historySub').textContent = sel.name + ' \u00B7 ' + sel.course + ' \u00B7 ' + sel.year;
+      document.getElementById('historyBody').innerHTML = '<div class="history-empty">Loading...</div>';
+      document.getElementById('historyOverlay').classList.add('show');
+
+      google.script.run
+        .withSuccessHandler(renderHistory)
+        .withFailureHandler(function(err) {
+          document.getElementById('historyBody').innerHTML =
+            '<div class="history-empty">Failed to load history: ' + err.message + '</div>';
+        })
+        .getAttendanceHistory(sel.course, sel.year, sel.name);
+    }
+
+    function closeHistory() {
+      document.getElementById('historyOverlay').classList.remove('show');
+    }
+
+    function renderHistory(history) {
+      const body = document.getElementById('historyBody');
+
+      if (!history || history.length === 0) {
+        body.innerHTML = '<div class="history-empty">No attendance records yet.</div>';
+        return;
+      }
+
+      let html = '';
+      history.forEach(function(h) {
+        const statusClass = (h.status || 'Pending').toLowerCase();
+        html += '<div class="history-item">';
+        html += '<div class="history-top">';
+        html += '<span class="history-date">' + h.date + '</span>';
+        html += '<span class="history-status ' + statusClass + '">' + (h.status || 'Pending') + '</span>';
+        html += '</div>';
+        html += '<div class="history-sessions">';
+        html += '<div><div class="history-session-label">AM</div><div class="history-session-val">' +
+          (h.amIn ? h.amIn + ' &rarr; ' + (h.amOut || '...') : '&mdash;') + '</div></div>';
+        html += '<div><div class="history-session-label">PM</div><div class="history-session-val">' +
+          (h.pmIn ? h.pmIn + ' &rarr; ' + (h.pmOut || '...') : '&mdash;') + '</div></div>';
+        html += '</div>';
+        html += '<div class="history-total">Total: ' + (h.totalHours || '0.00') + ' hrs</div>';
+        body.appendChild ? null : null;
+        html += '</div>';
+      });
+
+      body.innerHTML = html;
+    }
+
+    document.getElementById('historyOverlay').addEventListener('click', function(e) {
+      if (e.target === this) closeHistory();
+    });
+  </script>
+</body>
+</html>
