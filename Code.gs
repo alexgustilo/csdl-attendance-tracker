@@ -101,10 +101,7 @@ function rejectSelectedRows() {
   setStatusForSelectedRows_('Rejected');
 }
 
-// Ngayon gumagana ang Approve/Reject sa DALAWANG sheet: "Daily Log" at "History".
-// Kaya kahit hindi na-approve ng adviser ang record sa parehong araw at
-// na-archive na ito papunta sa "History", pwede pa rin itong i-approve/reject
-// anumang oras — hindi na kailangang abutan bago mag-12MN.
+
 function setStatusForSelectedRows_(status) {
   const ui = SpreadsheetApp.getUi();
   const ss = SpreadsheetApp.getActiveSpreadsheet();
@@ -130,8 +127,7 @@ function setStatusForSelectedRows_(status) {
     return;
   }
 
-  // Status column is L (12) sa Daily Log, pero K (11) sa History
-  // dahil walang hiwalay na "Date" column ang History (nasa merged header na ito).
+  
   const statusCol = (sheetName === SHEET_NAME) ? 12 : 11;
 
   let count = 0;
@@ -155,8 +151,7 @@ function setStatusForSelectedRows_(status) {
   ui.alert(status + ' applied to ' + count + ' row(s).');
 }
 
-// Tinitignan kung isang value ay valid na student-name cell (hindi blangko,
-// hindi header row, hindi "Date: ..." divider row ng History sheet).
+
 function isRealDataRow_(cellA) {
   if (!cellA) return false;
   if (cellA === 'Student Assistant') return false;
@@ -179,7 +174,7 @@ function recalcAllSummaries() {
     }
   }
 
-  // Isama rin ang mga estudyante na nasa archive lang (Sheet3)
+  
   const archiveSheet = getArchiveSheet();
   const archiveData = archiveSheet.getDataRange().getValues();
   for (let i = 0; i < archiveData.length; i++) {
